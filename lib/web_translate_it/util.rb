@@ -41,10 +41,17 @@ module WebTranslateIt
     end
     
     def self.add_fields(request)
-      request.add_field("X-Client-Name", "web_translate_it")
-      request.add_field("X-Client-Version", version)
+      request.add_field("X-Wti-Client-Name", "web_translate_it")
+      request.add_field("X-Wti-Client-Version", version)
       request.add_field("Content-Type", "application/json")
+      if File.exists?("#{Dir.home}/.wti")
+        request.add_field("X-Wti-Email", personal_configuration["email"])
+      end
     end
+    
+    def personal_configuration
+      @personal_configuration ||= YAML.load("#{Dir.home}/.wti")
+    end    
     
     ##
     # Ask a question. Returns a true for yes, false for no, default for nil.

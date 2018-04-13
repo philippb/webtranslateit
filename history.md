@@ -1,3 +1,13 @@
+## Version 3.0.0 / Unreleased
+
+* Add ability to set up your e-mail address used in WebTranslateIt in a .wti file in your home directory.
+  When set up, your e-mail address is passed in the headers in the request made to WebTranslateIt.com.
+  This isn’t a mean of authentication as anyone knowing the project private API token can then
+  make API calls in your name.
+  Your actions are no longer anonymous and you can see “[yourname] changed this segment via the API”.
+  
+  You can configure your `~/.wti` file by running: `wti configuser`.
+
 ## Version 2.4.7 / 2018-03-28
 
 * Add an option to .wti file to silence SSL errors.

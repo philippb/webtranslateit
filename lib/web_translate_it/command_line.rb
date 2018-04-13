@@ -8,7 +8,7 @@ module WebTranslateIt
     def initialize(command, command_options, global_options, parameters, project_path)
       self.command_options = command_options
       self.parameters = parameters
-      unless command == 'init'
+      unless %w{init configuser}.include? command
         case command
         when 'pull'
           message = "Pulling files"
@@ -185,7 +185,7 @@ module WebTranslateIt
     end
         
     def init
-      puts "# Initializing project"
+      puts "# Initializing Project"
       if parameters.any?
         api_key = parameters[0]
         path = '.wti'
@@ -226,6 +226,18 @@ module WebTranslateIt
       end
       puts "You can now use `wti` to push and pull your language files."
       puts "Check `wti --help` for help."
+      return true
+    end
+    
+    def configuser
+      puts "# Configuring User"
+      puts "  We will need the e-mail address as used on WebTranslateIt.com"
+      email = Util.ask(" Your email address:")
+      File.open("#{Dir.home}/.wti", 'w'){ |file| file << "email: \"#{email}\"" }
+      puts ""
+      puts " We placed your e-mail address to a .wti file in your home directory."
+      puts " This e-mail address will be passed along"
+      puts " with the requests you make to WebTranslateIt."
       return true
     end
     
